@@ -163,7 +163,7 @@ html, body {
   }
 
   .credits {
-    bottom: max(env(safe-area-inset-bottom, 0px), 80px);
+    bottom: 120px;
     right: 15px;
     font-size: 11px;
     padding-bottom: 20px;
