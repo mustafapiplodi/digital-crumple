@@ -130,6 +130,7 @@ html, body {
   opacity: 1;
   transform: translateY(0);
   letter-spacing: 0.5px;
+  position: relative;
 }
 
 .crumple-button:hover {
@@ -156,16 +157,16 @@ html, body {
   }
 
   .crumple-button {
-    bottom: 30px;
     padding: 14px 28px;
     font-size: 16px;
+    margin-bottom: 15px;
   }
 
   .credits {
-    bottom: 25px;
+    bottom: max(env(safe-area-inset-bottom, 0px), 80px);
     right: 15px;
     font-size: 11px;
-    padding-bottom: max(env(safe-area-inset-bottom, 0px), 10px);
+    padding-bottom: 20px;
   }
 }
 
