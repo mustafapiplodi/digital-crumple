@@ -4,6 +4,7 @@ class RealisticWritingExperience {
         this.isTyping = false;
         this.lastKeyTime = 0;
         this.typingRhythm = [];
+        this.effectTimeout = null;
 
         this.init();
     }
@@ -35,8 +36,14 @@ class RealisticWritingExperience {
     }
 
     handleInput(event) {
-        // Add ink flow effect as user types
-        this.addInkFlowEffect(event.target.value.length);
+        // Debounce ink flow effect for better performance
+        if (this.effectTimeout) {
+            clearTimeout(this.effectTimeout);
+        }
+
+        this.effectTimeout = setTimeout(() => {
+            this.addInkFlowEffect(event.target.value.length);
+        }, 32); // ~30fps for effects
     }
 
     handleFocus() {
@@ -95,12 +102,15 @@ class RealisticWritingExperience {
         const textarea = this.writingArea;
         const inkIntensity = Math.min(textLength / 100, 1);
 
-        // Gradually darken text color as more ink "flows"
-        const baseColor = 44; // Base darkness
-        const inkColor = Math.max(20, baseColor - (inkIntensity * 10));
-        textarea.style.color = `rgb(${inkColor}, ${Math.floor(inkColor * 1.4)}, ${Math.floor(inkColor * 1.8)})`;
+        // Use requestAnimationFrame for smooth color transitions
+        requestAnimationFrame(() => {
+            // Gradually darken text color as more ink "flows"
+            const baseColor = 44; // Base darkness
+            const inkColor = Math.max(20, baseColor - (inkIntensity * 10));
+            textarea.style.color = `rgb(${inkColor}, ${Math.floor(inkColor * 1.4)}, ${Math.floor(inkColor * 1.8)})`;
+        });
 
-        // Add paper absorption effect
+        // Add paper absorption effect less frequently
         if (textLength > 0 && textLength % 50 === 0) {
             this.addPaperAbsorptionEffect();
         }

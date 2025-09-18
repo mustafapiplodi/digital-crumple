@@ -7,6 +7,9 @@ class HandwritingVariation {
         this.charVariations = new Map();
         this.inkSmudges = [];
         this.paperWrinkles = [];
+        this.redrawTimeout = null;
+        this.lastText = '';
+        this.isTyping = false;
 
         this.init();
     }
@@ -147,21 +150,62 @@ class HandwritingVariation {
     handleInput(event) {
         if (!this.isEnabled) return;
 
+        const currentText = event.target.value;
+
         // Hide original text immediately when typing starts
-        if (event.target.value.length > 0) {
+        if (currentText.length > 0) {
             this.writingArea.classList.add('handwriting-active');
         } else {
             this.writingArea.classList.remove('handwriting-active');
         }
 
-        // Clear overlay and redraw with variations
-        this.redrawText();
+        // Only run expensive operations if text actually changed
+        if (currentText === this.lastText) return;
 
-        // Add ink smudging effects
-        this.addInkSmudging();
+        this.isTyping = true;
+        this.lastText = currentText;
 
-        // Add paper wrinkling from writing pressure
-        this.addPaperWrinkling();
+        // Debounce heavy rendering operations
+        if (this.redrawTimeout) {
+            clearTimeout(this.redrawTimeout);
+        }
+
+        // Immediate lightweight update for responsiveness
+        this.quickUpdate();
+
+        // Debounced full redraw with all effects
+        this.redrawTimeout = setTimeout(() => {
+            this.redrawText();
+            this.addInkSmudging();
+            this.addPaperWrinkling();
+            this.isTyping = false;
+        }, 16); // ~60fps
+    }
+
+    quickUpdate() {
+        // Lightweight update for immediate responsiveness during typing
+        const text = this.lastText;
+
+        if (!text) {
+            this.writingArea.classList.remove('handwriting-active');
+            return;
+        }
+
+        this.writingArea.classList.add('handwriting-active');
+
+        // Only redraw new characters since last update for performance
+        this.redrawTextOptimized();
+    }
+
+    redrawTextOptimized() {
+        // Only clear and redraw if we're not in a typing burst
+        if (this.isTyping && this.lastText.length > 0) {
+            // During typing, use requestAnimationFrame for smooth updates
+            requestAnimationFrame(() => {
+                this.ctx.clearRect(0, 0, this.characterOverlay.width, this.characterOverlay.height);
+                this.drawVariedText(this.lastText);
+            });
+        }
     }
 
     redrawText() {
