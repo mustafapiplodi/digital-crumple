@@ -34,6 +34,7 @@ html, body {
   position: relative;
   width: 100vw;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile browsers */
   overflow: hidden;
   transform: translateZ(0);
   will-change: transform;
@@ -163,10 +164,10 @@ html, body {
   }
 
   .credits {
-    bottom: 120px;
+    bottom: 40px;
     right: 15px;
     font-size: 11px;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
   }
 }
 
