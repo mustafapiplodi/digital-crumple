@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Crumple - Therapeutic Writing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Caveat:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/paper.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+</head>
+<body>
+    <div id="paper-container" class="paper-surface">
+        <canvas id="paper-texture" class="paper-background"></canvas>
+        <canvas id="physics-canvas" class="physics-layer"></canvas>
+
+        <textarea
+            id="writing-area"
+            placeholder="Digital Crumple - Therapeutic Writing Experience
+
+Pour your thoughts onto this digital paper
+Watch them crumble into oblivion when you're done
+A safe space for stream-of-consciousness writing
+Let go of what weighs on your mind
+
+Instructions:
+• Start typing to see your handwritten thoughts appear
+• Press 'Crumple' or Ctrl/Cmd+Enter when ready to release
+• Watch the paper crumble with realistic physics
+• Begin fresh with a new sheet"
+            spellcheck="false"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+        ></textarea>
+
+        <div class="credits">
+            <button id="crumple-btn" class="crumple-button hidden" aria-label="Crumple paper">
+                Crumple
+            </button>
+            <p>Made with ❤️ by <a href="https://linkedin.com/in/mustafapiplodi" target="_blank" rel="noopener">Mustafa Piplodi</a></p>
+            <p>Powered by <a href="https://scalinghigh.com" target="_blank" rel="noopener">Scaling High Technologies</a></p>
+        </div>
+    </div>
+
+    <script src="scripts/paper-texture.js"></script>
+    <script src="scripts/paper-aging.js"></script>
+    <script src="scripts/handwriting-variation.js"></script>
+    <script src="scripts/writing-experience.js"></script>
+    <script src="scripts/paper-physics.js"></script>
+    <script src="scripts/paper-physics-matter.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>

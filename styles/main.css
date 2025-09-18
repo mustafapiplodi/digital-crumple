@@ -1,0 +1,228 @@
+:root {
+  --paper-white: #ffffff;
+  --paper-texture: #f8f8f8;
+  --text-black: #000000;
+  --subtle-gray: #e5e5e5;
+  --placeholder-gray: #999999;
+  --button-black: #000000;
+  --button-hover: #333333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Kalam', 'Caveat', 'Dancing Script', cursive;
+  background: var(--paper-white);
+  color: var(--text-black);
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#paper-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.physics-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.physics-layer.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#writing-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #2c3e50;
+  font-family: 'Kalam', 'Caveat', 'Dancing Script', cursive;
+  font-size: 22px;
+  line-height: 2.2;
+  font-weight: 400;
+  resize: none;
+  overflow: auto;
+  z-index: 10;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.1);
+  letter-spacing: 0.5px;
+  cursor: text;
+  caret-color: #2c3e50;
+  transition: all 0.1s ease;
+}
+
+#writing-area:focus {
+  transform: scale(1.002);
+  filter: brightness(1.02);
+}
+
+#writing-area.handwriting-active {
+  color: transparent !important;
+  text-shadow: none !important;
+  caret-color: transparent !important;
+}
+}
+
+#writing-area::placeholder {
+  color: var(--placeholder-gray);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+#writing-area:focus::placeholder {
+  opacity: 0.3;
+}
+
+#writing-area:not(:placeholder-shown)::placeholder {
+  opacity: 0;
+}
+
+.crumple-button {
+  background: transparent;
+  color: #2c3e50;
+  border: 2px solid #2c3e50;
+  border-radius: 8px;
+  font-family: 'Kalam', 'Caveat', 'Dancing Script', cursive;
+  font-size: 18px;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin-bottom: 10px;
+  transition: all 0.2s ease;
+  opacity: 1;
+  transform: translateY(0);
+  letter-spacing: 0.5px;
+}
+
+.crumple-button:hover {
+  background: rgba(44, 62, 80, 0.05);
+  transform: translateY(-1px);
+  border-color: #1a252f;
+}
+
+.crumple-button:active {
+  transform: translateY(0);
+}
+
+.crumple-button.hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  #writing-area {
+    padding: 20px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .crumple-button {
+    bottom: 30px;
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+}
+
+.credits {
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+  z-index: 30;
+  text-align: right;
+  line-height: 1.4;
+}
+
+.credits p {
+  margin: 2px 0;
+}
+
+.credits a {
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.credits a:hover {
+  color: rgba(0, 0, 0, 0.8);
+  text-decoration: underline;
+}
+
+@media (min-width: 1200px) {
+  #writing-area {
+    padding: 60px;
+    font-size: 20px;
+  }
+}
+
+@keyframes ink-absorption {
+  0% {
+    transform: scale(1);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(3);
+    opacity: 0.05;
+  }
+  100% {
+    transform: scale(6);
+    opacity: 0;
+  }
+}
+
+.ink-absorption-ripple {
+  animation: ink-absorption 2s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .ink-absorption-ripple {
+    display: none;
+  }
+}
