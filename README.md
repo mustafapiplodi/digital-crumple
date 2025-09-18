@@ -1,5 +1,7 @@
 # Digital Crumple - Therapeutic Writing Experience
 
+**Live Demo**: [https://paper-crumble.vercel.app](https://paper-crumble.vercel.app)
+
 A unique web application that simulates the cathartic experience of writing your thoughts on paper and then crumpling it up. Digital Crumple provides a safe, private space for stream-of-consciousness writing with realistic paper physics and handwriting effects.
 
 ## What It Does
@@ -223,19 +225,6 @@ digital-crumple/
 - **Therapy**: Digital version of expressive writing exercises
 - **Creative Writing**: Unique environment for brainstorming and ideation
 - **Meditation**: Mindful writing and letting go practice
-
-## Contributing
-
-We welcome contributions! Please feel free to submit issues and pull requests.
-
-### Development Setup
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes and test thoroughly
-4. Commit with descriptive messages: `git commit -m "Add feature description"`
-5. Push to your fork: `git push origin feature-name`
-6. Submit a pull request
 
 ## License
 
